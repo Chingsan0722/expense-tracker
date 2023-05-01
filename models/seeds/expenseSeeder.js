@@ -2,7 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const Expense = require('../expense') // 載入Todo model
+const Record = require('../record') // 載入Todo model
 const User = require('../user') // 載入User model
 const bcrypt = require('bcryptjs')
 const db = require('../../config/mongoose')

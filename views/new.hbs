@@ -2,24 +2,23 @@
   <div class="col-8 mt-5">
     <form action="/expense/new" method="POST">
       <div class="btn-group" role="group" aria-label="Income or Expense">
-        <input type="radio" class="btn-check" name="amountType" id="income" value="income" autocomplete="off">
+        <input type="radio" class="btn-check" name="amountType" id="income" value="income" autocomplete="off" required>
         <label class="btn btn-outline-info" for="income" value="Income">Income</label>
-        <input type="radio" class="btn-check" name="amountType" id="expense" value="expense" autocomplete="off">
+        <input type="radio" class="btn-check" name="amountType" id="expense" value="expense" autocomplete="off" required>
         <label class="btn btn-outline-success" for="expense" value="Expense">Expense</label>
       </div>
       <div class="form-group">
         <fieldset>
           <label class="form-label mt-4" for="name">Name</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Name or Details">
+          <input type="text" class="form-control" id="name" name="name" placeholder="Name or Details" required>
         </fieldset>
       </div>
       <label for="date">Date</label>
-      <input id="date" name="date" class="form-control" type="date" value="" />
+      <input id="date" name="date" class="form-control" type="date" value="" required>
 
-      <label for="category">Category</label>
+      <label for="category" required>Category</label>
       <div class="form-floating">
         <select class="form-select" id="category" name="category" aria-label="Floating label select">
-          <option selected>Selected</option>
           <option value="Expense" disabled>Expense</option>
           <option value="Clothes">Clothes</option>
           <option value="Food">Food</option>
@@ -36,7 +35,7 @@
         <div class="form-group">
           <div class="input-group mb-3">
             <span class="input-group-text">$</span>
-            <input type="number" class="form-control" id="amount" name="amount" aria-label="Amount">
+            <input type="number" class="form-control" id="amount" name="amount" aria-label="Amount" required>
             <span class="input-group-text">TWD</span>
           </div>
           <div class="text-center mt-5">
