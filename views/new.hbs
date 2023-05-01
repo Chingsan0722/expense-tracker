@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8 mt-5">
+    <form action="/new" method="POST">
+      <div class="btn-group" role="group" aria-label="Income or Expense">
+        <input type="radio" class="btn-check" name="inOrOut" id="income" value="income" autocomplete="off" checked>
+        <label class="btn btn-outline-info" for="income">Income</label>
+        <input type="radio" class="btn-check" name="inOrOut" id="expense" value="expense" autocomplete="off">
+        <label class="btn btn-outline-success" for="income">Expense</label>
+      </div>
+      <div class="form-group">
+        <fieldset>
+          <label class="form-label mt-4" for="name">Name</label>
+          <input class="form-control" id="name" type="text" placeholder="Name or Details" readonly="">
+        </fieldset>
+      </div>
+      <label for="date">Date</label>
+      <input id="date" class="form-control" type="date" />
+
+      <label for="category">Category</label>
+      <div class="form-floating">
+        <select class="form-select" id="category" name="category" aria-label="Floating label select">
+          <option selected>Selected</option>
+          <option value="expense" disabled>Expense</option>
+          <option value="clothes">Clothes</option>
+          <option value="food">Food</option>
+          <option value="living">Living</option>
+          <option value="traffic">Traffic</option>
+          <option value="income" disabled>Income</option>
+          <option value="salary">Salary</option>
+          <option value="bonus">Bonus</option>
+          <option value="invest">Invest</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label mt-4">Input addons</label>
+        <div class="form-group">
+          <div class="input-group mb-3">
+            <span class="input-group-text">$</span>
+            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+            <span class="input-group-text">TWD</span>
+          </div>
+          <div class="text-center mt-5">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="/" class="btn btn-dark">Back</a>
+          </div>
+    </form>
+  </div>
+</div>
