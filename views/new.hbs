@@ -2,19 +2,19 @@
   <div class="col-8 mt-5">
     <form action="/new" method="POST">
       <div class="btn-group" role="group" aria-label="Income or Expense">
-        <input type="radio" class="btn-check" name="inOrOut" id="income" value="income" autocomplete="off" checked>
-        <label class="btn btn-outline-info" for="income">Income</label>
-        <input type="radio" class="btn-check" name="inOrOut" id="expense" value="expense" autocomplete="off">
-        <label class="btn btn-outline-success" for="income">Expense</label>
+        <input type="radio" class="btn-check" name="amountType" id="income" value="income" autocomplete="off">
+        <label class="btn btn-outline-info" for="income" value="income">Income</label>
+        <input type="radio" class="btn-check" name="amountType" id="expense" value="expense" autocomplete="off">
+        <label class="btn btn-outline-success" for="expense" value="expense">Expense</label>
       </div>
       <div class="form-group">
         <fieldset>
           <label class="form-label mt-4" for="name">Name</label>
-          <input class="form-control" id="name" type="text" placeholder="Name or Details" readonly="">
+          <input type="text" class="form-control" id="name" name="name" placeholder="Name or Details">
         </fieldset>
       </div>
       <label for="date">Date</label>
-      <input id="date" class="form-control" type="date" />
+      <input id="date" name="date" class="form-control" type="date" value="" />
 
       <label for="category">Category</label>
       <div class="form-floating">
@@ -32,11 +32,11 @@
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label mt-4">Input addons</label>
+        <label class="form-label mt-4" for="amount">Amount</label>
         <div class="form-group">
           <div class="input-group mb-3">
             <span class="input-group-text">$</span>
-            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+            <input type="number" class="form-control" id="amount" name="amount" aria-label="Amount">
             <span class="input-group-text">TWD</span>
           </div>
           <div class="text-center mt-5">
