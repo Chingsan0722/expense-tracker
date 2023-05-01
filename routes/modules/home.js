@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
 const now = '2023-11-29T08:00:00.000+08:00'
-function localTime(date) {
-  return moment(date).format('YYYY-MM-DD')
-}
+// function localTime(date) {
+//   return moment(date).format('YYYY-MM-DD')
+// }
 
 
 const CATEGORY = {
@@ -16,7 +16,9 @@ const CATEGORY = {
 }
 
 router.get('/', (req, res) => {
-  Record.find()
+  const userId = req.user._id
+  const totalAmount = 9000
+  Record.find({ userId })
     .lean()
     // .then(expenseData => {
     //   return Promise.all(
@@ -27,7 +29,7 @@ router.get('/', (req, res) => {
     //       }))
     //     .then(() => console.log(expenseData))
     // })
-    .then((expenseData) => res.render('index',{expenseData}))
+    .then((expenseData) => res.render('index', { expenseData, totalAmount }))
     .catch(err => console.log(err))
 })
 

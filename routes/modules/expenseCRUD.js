@@ -7,23 +7,24 @@ router.get('/new', (req, res) => {
   res.render('new')
 })
 router.post('/new', (req, res) => {
-  const expenseData = req.body
-  return Record.create(expenseData)
+  const { amountType, name, categoryId, amount, date } = req.body
+  const userId = req.user._id
+  return Record.create({ amountType, name, categoryId, amount, date, userId })
     .then(res.redirect('/'))
     .catch(err => console.log(err))
 })
 
 // 搜尋消費
 router.get('/search', (req, res) => {
+  const userId = req.user._id
   const keywords = req.query.keyword
-  const keyword =keywords.trim().toLowerCase()
-  console.log(req.query)
+  const keyword = keywords.trim().toLowerCase()
   // const userId = req.user._id
   if (!keywords) {
     return res.redirect('/')
   }
   return Record
-    .find()
+    .find({ userId })
     .lean()
     .then(expenseData => {
       const filterExpense = expenseData.filter(data => data.name.trim().toLowerCase().includes(keyword) || data.category.toLowerCase().includes(keyword))

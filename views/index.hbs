@@ -1,20 +1,20 @@
 <div class="row">
   <div class="col-md-8 m-auto">
     <div class="card card-body mt-5">
-      <h2 class="text-center mt-3">阿爸欸記帳本</h2>
+      <h2 class="text-center mt-3">{{user.name}}'s 記帳本</h2>
       <div class="form-group">
         <label for="exampleSelect1" class="form-label mt-4">Type select</label>
         <select class="form-select" id="exampleSelect1">
           <option value="all">All</option>
           <option value="income">Income</option>
           <option value="expense">Expense</option>
-          <option value="clothes">Clothes</option>
-          <option value="food">Food</option>
-          <option value="living">Living</option>
-          <option value="traffic">Traffic</option>
-          <option value="salary">Salary</option>
-          <option value="bonus">Bonus</option>
-          <option value="invest">Invest</option>
+          <option value= 1>Clothes</option>
+          <option value= 2>Food</option>
+          <option value= 3>Living</option>
+          <option value= 4>Traffic</option>
+          <option value= 5>Salary</option>
+          <option value= 6>Bonus</option>
+          <option value= 7>Invest</option>
         </select>
         {{!-- <i class="fa-solid fa-home"></i>
         <i class="fa-solid fa-van-shuttle"></i>
@@ -22,7 +22,7 @@
         <i class="fa-solid fa-utensils"></i>
         <i class="fa-solid fa-pen"></i> --}}
       </div>
-      <h1>Total Amount： 29830 $</h1>
+      <h1>Total Amount： {{totalAmount}} $</h1>
       <table class="table table-hover table-striped">
         <thead class="table-primary">
           <tr>
@@ -37,7 +37,7 @@
         <tbody>
           {{#each expenseData}}
           <tr class="table-active">
-            <th scope="row">{{this.category}}</th>
+            <th scope="row">{{this.categoryId}}</th>
             <td>{{this.name}}</td>
             <td>{{this.amount}}</td>
             <td>{{this.date}}</td>
@@ -53,7 +53,7 @@
           {{/each}}
         </tbody>
       </table>
-      <a href="/expense/new" class="btn btn-primary"> + New Cost</a>
+      <a href="/expense/new" class="btn btn-primary"> + New Expense or Income</a>
     </div>
   </div>
 </div>
