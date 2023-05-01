@@ -4,6 +4,10 @@ const FacebookStrategy = require('passport-facebook').Strategy
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 module.exports = app => {
   app.use(passport.initialize())
   app.use(passport.session())
@@ -24,6 +28,32 @@ module.exports = app => {
       })
   }))
 }
+
+passport.use(new FacebookStrategy({
+  clientID: process.env.clientID,
+  clientSecret: process.env.clientSecret,
+  callbackURL: process.env.callbackURL,
+  profileFields: ['email', 'displayName']
+}, (accessToken, refreshToken, profile, done) => {
+  const { name, email } = profile._json
+  User.findOne({ email })
+    .then(user => {
+      if (!user) {
+        const randomPassword = Math.random().toString(36).slice(-8)
+        bcrypt
+          .genSalt(10)
+          .then(salt => bcrypt.hash(randomPassword, salt))
+          .then(hash => User.create({
+            name,
+            email,
+            password: hash
+          }))
+      }
+      return done(null, user)
+    }
+    )
+})
+)
 
 passport.serializeUser((user, done) => {
   done(null, user.id)
