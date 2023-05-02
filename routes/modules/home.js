@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
         .lean()
         .then((expenseData) => {
           expenseData.forEach((data) => {
-            if (data.amountType === 'expense') {
+            if (data.amountType === '支出') {
               totalAmount -= data.amount
             } else {
               totalAmount += data.amount

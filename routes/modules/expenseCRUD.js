@@ -58,9 +58,14 @@ router.get('/search', (req, res) => {
 router.get('/:expenseId/edit', (req, res) => {
   const userId = req.user._id
   const expenseId = req.params.expenseId
-  Record.findById(expenseId)
+  Category.find()
+    .then(
+      Record.findById(expenseId)
+      .populate('categoryId')
     .lean()
-    .then(expenseData => res.render('edit', { expenseData }
+    .then(expenseData => {
+      expenseData.date = expenseData.date.toISOString().slice(0, 10)
+      res.render('edit', { expenseData })}
     ))
     .catch(err => console.log(err))
 })
