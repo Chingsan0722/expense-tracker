@@ -19,12 +19,6 @@ const SEED_USER = [
     password: '1234'
   }
 ]
-const categoryData = require('./category.json').results
-
-// db.once('open', () => {
-//   Category.create(categoryData)
-//   return console.log('done.')
-// })
 
 db.once('open', () => {
   Category.find()

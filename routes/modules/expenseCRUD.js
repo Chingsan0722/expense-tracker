@@ -26,7 +26,7 @@ router.get('/search', (req, res) => {
   const userId = req.user._id
   const keywords = req.query.keyword
   const keyword = keywords.trim().toLowerCase()
-  let totalAmount = 9000
+  let totalAmount = 0
   // const userId = req.user._id
   if (!keywords) {
     return res.redirect('/')

@@ -37,7 +37,7 @@
         <tbody>
           {{#each expenseData}}
           <tr class="table-active">
-            <th scope="row">{{this.categoryId.category}}</th>
+            <th scope="row"><i class="fa-solid {{this.categoryId.icon}}" style="padding-right: 5px;"></i>{{this.categoryId.category}}</th>
             <td>{{this.name}}</td>
             <td>{{this.amount}}</td>
             <td>{{this.date}}</td>

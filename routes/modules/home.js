@@ -13,7 +13,7 @@ const CATEGORY = {
 
 router.get('/', (req, res) => {
   const userId = req.user._id
-  let totalAmount = 9000
+  let totalAmount = 0
   Category.find()
     .then(
       Record.find({ userId })
