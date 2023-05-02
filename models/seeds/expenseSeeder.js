@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const Record = require('../record') // 載入Todo model
 const User = require('../user') // 載入User model
+const Category = require('../category')
 const bcrypt = require('bcryptjs')
 const db = require('../../config/mongoose')
 const SEED_USER = [
@@ -18,3 +19,31 @@ const SEED_USER = [
     password: '1234'
   }
 ]
+const categoryData = require('./category.json').results
+
+// db.once('open', () => {
+//   Category.create(categoryData)
+//   return console.log('done.')
+// })
+
+db.once('open', () => {
+  Category.find()
+    .then(categories => {
+      const categoriesId = []
+      categories.forEach(category => {
+        categoriesId.push(category._id)
+      })
+      return categoriesId
+    })
+    .then(id => {
+      Record.create({
+        amountType: 'expense',
+        name: 'exp01',
+        date: '2023-05-02',
+        amount: 100,
+        categoryId: id[0],
+        userId: '6450ae5fa496f11ad4ac15ed'
+      })
+    })
+  return console.log('done.')
+})

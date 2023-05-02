@@ -1,11 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
-const now = '2023-11-29T08:00:00.000+08:00'
-// function localTime(date) {
-//   return moment(date).format('YYYY-MM-DD')
-// }
-
+const Category = require('../../models/category')
 
 const CATEGORY = {
   家居物業: "https://fontawesome.com/icons/home?style=solid",
@@ -17,19 +13,28 @@ const CATEGORY = {
 
 router.get('/', (req, res) => {
   const userId = req.user._id
-  const totalAmount = 9000
-  Record.find({ userId })
-    .lean()
-    // .then(expenseData => {
-    //   return Promise.all(
-    //     Array.from(
-    //       expenseData.length, (expenseData) => {
-    //         const newDate = localTime(expenseData.date)
-    //         expenseData.date = newDate
-    //       }))
-    //     .then(() => console.log(expenseData))
-    // })
-    .then((expenseData) => res.render('index', { expenseData, totalAmount }))
+  let totalAmount = 9000
+  Category.find()
+    .then(checkedCategory => {
+      Record.find({ userId })
+        .populate('categoryId')
+        .lean()
+        .then((expenseData) => {
+          expenseData.forEach((data) => {
+            if (data.amountType === 'expense') {
+              totalAmount -= data.amount
+            } else {
+              totalAmount += data.amount
+            }
+          })
+          expenseData.forEach((data) => {
+            return data.date = data.date.toISOString().slice(0, 10)
+          })
+          console.log(expenseData)
+          return res.render('index', { expenseData, totalAmount, checkedCategory })
+        })
+        .catch(err => console.log(err))
+    })
     .catch(err => console.log(err))
 })
 
