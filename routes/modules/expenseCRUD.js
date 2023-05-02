@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
+const Category = require('../../models/category')
 
 // 建立新的消費
 router.get('/new', (req, res) => {
@@ -8,8 +9,14 @@ router.get('/new', (req, res) => {
 })
 router.post('/new', (req, res) => {
   const { amountType, name, categoryId, amount, date } = req.body
+  let category_id = ''
   const userId = req.user._id
-  return Record.create({ amountType, name, categoryId, amount, date, userId })
+  Category.findOne({ id: categoryId })
+    .then(categories => {
+      category_id = categories._id
+      return Record.create({ amountType, name, categoryId: category_id, amount, date, userId })
+        .catch(err => console.log(err))
+    })
     .then(res.redirect('/'))
     .catch(err => console.log(err))
 })
@@ -19,38 +26,61 @@ router.get('/search', (req, res) => {
   const userId = req.user._id
   const keywords = req.query.keyword
   const keyword = keywords.trim().toLowerCase()
+  let totalAmount = 9000
   // const userId = req.user._id
   if (!keywords) {
     return res.redirect('/')
   }
-  return Record
-    .find({ userId })
-    .lean()
-    .then(expenseData => {
-      const filterExpense = expenseData.filter(data => data.name.trim().toLowerCase().includes(keyword) || data.category.toLowerCase().includes(keyword))
-      res.render('index', { expenseData: filterExpense, keywords })
-    })
+  Category.find()
+    .then(Record
+      .find({ userId })
+      .populate('categoryId')
+      .lean()
+      .then(expenseData => {
+        const filterExpense = expenseData.filter(data => data.name.trim().toLowerCase().includes(keyword))
+        filterExpense.forEach((data) => {
+          return data.date = data.date.toISOString().slice(0, 10)
+        })
+        expenseData.forEach((data) => {
+          if (data.amountType === 'expense') {
+            totalAmount -= data.amount
+          } else {
+            totalAmount += data.amount
+          }
+        })
+        res.render('index', { expenseData: filterExpense, keywords , totalAmount})
+      })
+    )
     .catch(err => console.log(err))
 })
 
 // 修改消費
 router.get('/:expenseId/edit', (req, res) => {
-  const expenseId = req.params.id
-  Record.findOne(expenseId)
+  const userId = req.user._id
+  const expenseId = req.params.expenseId
+  Record.findById(expenseId)
     .lean()
-    .then(expenseData => res.render('edit', {
-      expenseData
-    }))
+    .then(expenseData => res.render('edit', { expenseData }
+    ))
     .catch(err => console.log(err))
 })
+
 
 router.put('/:expenseId/edit', (req, res) => {
   // 這時候的req.params跟get時的不一樣，應改為expenseId
   const expenseId = req.params.expenseId
-  const newExpense = req.body
-  return Record
-    .findByIdAndUpdate(expenseId, { ...newExpense })
-    .then(() => res.redirect(`/expense/${expenseId}/edit`))
+  const { amountType, name, categoryId, amount, date } = req.body
+  let category_id = ''
+  const userId = req.user._id
+  Category.findOne({ id: categoryId })
+    .then(categories => {
+      category_id = categories._id
+      return Record
+        .findByIdAndUpdate(expenseId, { amountType, name, categoryId: category_id, amount, date, userId })
+        .then(() => res.redirect('/'))
+        .catch(err => console.log(err))
+    }
+    )
     .catch(err => console.log(err))
 })
 

@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
   const userId = req.user._id
   let totalAmount = 9000
   Category.find()
-    .then(checkedCategory => {
+    .then(
       Record.find({ userId })
         .populate('categoryId')
         .lean()
@@ -30,11 +30,10 @@ router.get('/', (req, res) => {
           expenseData.forEach((data) => {
             return data.date = data.date.toISOString().slice(0, 10)
           })
-          console.log(expenseData)
-          return res.render('index', { expenseData, totalAmount, checkedCategory })
+          return res.render('index', { expenseData, totalAmount })
         })
         .catch(err => console.log(err))
-    })
+    )
     .catch(err => console.log(err))
 })
 
