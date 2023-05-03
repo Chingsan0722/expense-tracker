@@ -2,12 +2,23 @@
   <div class="col-md-8 m-auto">
     <div class="card card-body mt-5">
       <h2 class="text-center mt-3">{{user.name}}的 記帳本</h2>
+      <div class="dropdown mt-2 ms-3 ms-auto">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          排序
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="/sort/nameasc">A - Z</a></li>
+          <li><a class="dropdown-item" href="/sort/namedesc">Z - A</a></li>
+          <li><a class="dropdown-item" href="/sort/catasc">類別</a></li>
+          <li><a class="dropdown-item" href="/sort/locasc">地區</a></li>
+        </ul>
+      </div>
       <div class="form-group">
-        <label for="exampleSelect1" class="form-label mt-4">種類</label>
-        <select class="form-select" id="exampleSelect1">
-          <option value="all">全部</option>
-          <option value="income">收入</option>
-          <option value="expense">支出</option>
+        <select class="form-select" id="exampleSelect1" onChange="location = this.options[this.selectedIndex].value">
+          <option value=""> 全部</option>
+          <option value="收入">收入</option>
+          <option value="支出">支出</option>
           <option value= 1>家居物業</option>
           <option value= 2>交通出行</option>
           <option value= 3>休閒娛樂</option>
@@ -17,11 +28,6 @@
           <option value= 7>額外收入</option>
           <option value= 8>投資收入</option>
         </select>
-        {{!-- <i class="fa-solid fa-home"></i>
-        <i class="fa-solid fa-van-shuttle"></i>
-        <i class="fa-solid fa-face-grin-beam"></i>
-        <i class="fa-solid fa-utensils"></i>
-        <i class="fa-solid fa-pen"></i> --}}
       </div>
       <h1 class="p-2 text-center">Total Amount： {{totalAmount}} $</h1>
       <table class="table table-hover table-striped">
