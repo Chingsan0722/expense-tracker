@@ -58,8 +58,7 @@ db.once('open', () => {
   Category.create(categories)
   .then(() => {
   console.log('done.')
-  process.exit()
-}).catch(err => console.log(err))
+}).catch(err => console.log)
 })
 
 

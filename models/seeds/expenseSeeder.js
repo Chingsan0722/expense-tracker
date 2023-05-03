@@ -26,6 +26,7 @@ db.once('open', () => {
       const categoriesId = []
       categories.forEach(category => {
         categoriesId.push(category._id)
+        categoriesId.push(category.id)
       })
       return categoriesId
     })
@@ -35,9 +36,13 @@ db.once('open', () => {
         name: 'exp01',
         date: '2023-05-02',
         amount: 100,
-        categoryId: id[0],
-        userId: '6450ae5fa496f11ad4ac15ed'
+        category_id: id[0],
+        userId: '6450ae5fa496f11ad4ac15ed',
+        categoryId: id[1]
       })
     })
-  return console.log('done.')
+    .catch(err => console.log(err))
 })
+  .then(() => {
+    console.log('done.')
+  })

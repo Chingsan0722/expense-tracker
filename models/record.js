@@ -17,7 +17,7 @@ const expenseSchema = new Schema ({
     type: Number,
     required: true
   },
-  categoryId: {
+  category_id: {
     type: Schema.Types.ObjectId,
     ref: 'Category',
     required: true
@@ -25,6 +25,10 @@ const expenseSchema = new Schema ({
   userId: { 
     type: Schema.Types.ObjectId,
     ref: 'User',
+    required: true
+  },
+  categoryId:{
+    type: String,
     required: true
   }
 })

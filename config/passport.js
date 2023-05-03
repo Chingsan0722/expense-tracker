@@ -15,12 +15,12 @@ module.exports = app => {
     User.findOne({ email })
       .then(user => {
         if (!user) {
-          return done(null, false, req.flash('warning_msg', 'Email not found.'))
+          return done(null, false, req.flash('warning_msg', '找不到電子信箱'))
         }
         return bcrypt.compare(password, user.password).then(isMatch => {
           if (!isMatch) {
             // 驗證成功but：帳號或密碼錯誤
-            return done(null, false, req.flash('warning_msg', 'Wrong email or password!'))
+            return done(null, false, req.flash('warning_msg', '帳號或密碼錯誤!'))
           }
           return done(null, user)
         })

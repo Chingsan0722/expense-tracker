@@ -2,20 +2,10 @@
   <div class="col-md-8 m-auto">
     <div class="card card-body mt-5">
       <h2 class="text-center mt-3">{{user.name}}的 記帳本</h2>
-      <div class="dropdown mt-2 ms-3 ms-auto">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          排序
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="/sort/nameasc">A - Z</a></li>
-          <li><a class="dropdown-item" href="/sort/namedesc">Z - A</a></li>
-          <li><a class="dropdown-item" href="/sort/catasc">類別</a></li>
-          <li><a class="dropdown-item" href="/sort/locasc">地區</a></li>
-        </ul>
-      </div>
       <div class="form-group">
         <select class="form-select" id="exampleSelect1" onChange="location = this.options[this.selectedIndex].value">
+          <option value={{expenseData.category_id.id}}>{{directType}}</option>
+          <optgroup label="選擇種類"></optgroup>
           <option value=""> 全部</option>
           <option value="收入">收入</option>
           <option value="支出">支出</option>
@@ -44,7 +34,7 @@
         <tbody>
           {{#each expenseData}}
           <tr class="table-active">
-            <th scope="row"><i class="fa-solid {{this.categoryId.icon}}" style="padding-right: 5px;"></i>{{this.categoryId.category}}</th>
+            <th scope="row"><i class="fa-solid {{this.category_id.icon}}" style="padding-right: 5px;"></i>{{this.category_id.category}}</th>
             <td>{{this.name}}</td>
             <td>{{this.amount}}</td>
             <td>{{this.date}}</td>

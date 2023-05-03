@@ -14,10 +14,11 @@ const CATEGORY = {
 router.get('/', (req, res) => {
   const userId = req.user._id
   let totalAmount = 0
+  let directType = '全部'
   Category.find()
     .then(
       Record.find({ userId })
-        .populate('categoryId')
+        .populate('category_id')
         .lean()
         .then((expenseData) => {
           expenseData.forEach((data) => {
@@ -30,7 +31,7 @@ router.get('/', (req, res) => {
           expenseData.forEach((data) => {
             return data.date = data.date.toISOString().slice(0, 10)
           })
-          return res.render('index', { expenseData, totalAmount })
+          return res.render('index', { expenseData, totalAmount, directType })
         })
         .catch(err => console.log(err))
     )
@@ -38,13 +39,16 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:type', (req, res) => {
+  const userId = req.user._id
   const {type} = req.params
   let totalAmount = 0
-  if (type === '支出' || '收入') {
+  if( !type ){
+  return res.redirect('/')
+  }else if (type.length === 2) {
   Category.find()
     .then(
-      Record.find({ amountType: type })
-        .populate('categoryId')
+      Record.find({ amountType: type, userId }) 
+        .populate('category_id')
         .lean()
         .then((expenseData) => {
           expenseData.forEach((data) => {
@@ -57,16 +61,16 @@ router.get('/:type', (req, res) => {
           expenseData.forEach((data) => {
             return data.date = data.date.toISOString().slice(0, 10)
           })
-          return res.render('index', { expenseData, totalAmount })
+          return res.render('index', { expenseData, totalAmount, directType:type })
         })
         .catch(err => console.log(err))
     )
     .catch(err => console.log(err))
-      }else{
+      }else if(type.length === 1){
     Category.find()
       .then(
-        Record.find({ amountType: type })
-          .populate('categoryId')
+        Record.find({ categoryId: type, userId })
+          .populate('category_id')
           .lean()
           .then((expenseData) => {
             expenseData.forEach((data) => {
@@ -79,7 +83,7 @@ router.get('/:type', (req, res) => {
             expenseData.forEach((data) => {
               return data.date = data.date.toISOString().slice(0, 10)
             })
-            return res.render('index', { expenseData, totalAmount })
+            return res.render('index', { expenseData, totalAmount, directType: expenseData[0].category_id.category })
           })
           .catch(err => console.log(err))
       )

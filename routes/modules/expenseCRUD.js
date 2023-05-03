@@ -14,7 +14,7 @@ router.post('/new', (req, res) => {
   Category.findOne({ id: categoryId })
     .then(categories => {
       category_id = categories._id
-      return Record.create({ amountType, name, categoryId: category_id, amount, date, userId })
+      return Record.create({ amountType, name, category_id, categoryId, amount, date, userId })
         .catch(err => console.log(err))
     })
     .then(res.redirect('/'))
@@ -34,7 +34,7 @@ router.get('/search', (req, res) => {
   Category.find()
     .then(Record
       .find({ userId })
-      .populate('categoryId')
+      .populate('category_id')
       .lean()
       .then(expenseData => {
         const filterExpense = expenseData.filter(data => data.name.trim().toLowerCase().includes(keyword))
@@ -56,12 +56,12 @@ router.get('/search', (req, res) => {
 
 // 修改消費
 router.get('/:expenseId/edit', (req, res) => {
-  const userId = req.user._id
+  // const userId = req.user._id
   const expenseId = req.params.expenseId
   Category.find()
     .then(
       Record.findById(expenseId)
-      .populate('categoryId')
+      .populate('category_id')
     .lean()
     .then(expenseData => {
       expenseData.date = expenseData.date.toISOString().slice(0, 10)
@@ -72,7 +72,6 @@ router.get('/:expenseId/edit', (req, res) => {
 
 
 router.put('/:expenseId/edit', (req, res) => {
-  // 這時候的req.params跟get時的不一樣，應改為expenseId
   const expenseId = req.params.expenseId
   const { amountType, name, categoryId, amount, date } = req.body
   let category_id = ''
@@ -81,7 +80,7 @@ router.put('/:expenseId/edit', (req, res) => {
     .then(categories => {
       category_id = categories._id
       return Record
-        .findByIdAndUpdate(expenseId, { amountType, name, categoryId: category_id, amount, date, userId })
+        .findByIdAndUpdate(expenseId, { amountType, name, category_id, categoryId, amount, date, userId })
         .then(() => res.redirect('/'))
         .catch(err => console.log(err))
     }
