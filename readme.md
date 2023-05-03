@@ -1,23 +1,20 @@
-# 我的餐廳清單
+# 老爸的記帳本
 
-一個使用 Node.js + Express 打造的餐廳美食網站，儲存自己喜歡的餐廳，並且透過搜尋功能找到喜歡的餐廳類型或名稱
+一個使用 Node.js + Express + MongoDB 打造的 記帳本，用來紀錄日常開銷
 
 
 ## 專案畫面
 
-![image](https://github.com/Chingsan0722/ac-restaurant-list/blob/main/snapshots/login_page.png)
-
-![image](https://github.com/Chingsan0722/ac-restaurant-list/blob/main/snapshots/user_page.png)
+![image](https://github.com/Chingsan0722/expense-tracker/blob/main/snapshot/home-page.png)
 
 ## Features - 產品功能
 
 1. 使用者可以創建自己的帳號，也可選擇FB登入
-2. 使用者可以瀏覽所有自己的餐廳
-3. 使用者可以新增餐廳
-4. 使用者可以點擊任一餐廳，查看更多餐廳資訊，如地址、電話與簡介
-5. 使用者可以依照中文名稱、英文名稱與餐廳類別進行搜尋
-6. 使用者可以編輯餐廳內容
-7. 使用者可以使用排序功能(建置中，搜尋後無法使用)
+2. 使用者可以瀏覽所有自己的帳目
+3. 使用者可以新增帳目(包含收入、支出)
+4. 使用者可以編輯任一帳目
+5. 使用者可以依照帳目名稱進行搜尋
+6. 使用者可以選擇單一類別檢視支出、收入等總金額
 
 ## Environment SetUp - 環境建置
 
@@ -28,13 +25,13 @@
 1. 打開你的 terminal，Clone 此專案至本機電腦
 
 ```
-git clone https://github.com/Chingsan0722/ac-restaurant-list.git
+git clone https://github.com/Chingsan0722/expense-tracker.git
 ```
 
 2. 開啟終端機(Terminal)，進入存放此專案的資料夾
 
 ```
-cd restaurant-list2
+cd expense-tracker
 ```
 
 3. 安裝 npm 套件，在 Terminal 輸入
@@ -63,7 +60,7 @@ App i 1s running on http://localhost:3000
 7. 使用建立好的種子使用者登入
 
 帳號：user1@example.com
-密碼：12345678
+密碼：1234
 
 現在，你可開啟任一瀏覽器瀏覽器輸入 [http://localhost:3000](http://localhost:3000) 開始使用我的餐廳清單囉！
 
