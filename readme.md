@@ -39,13 +39,13 @@ cd expense-tracker
 ```
  npm install
 ```
-4. 載入種子資料
+4. 更改 .env.example 為 .env ， 並放入對應參數
+
+5. 載入種子資料
 
 ```
 npm run seed
 ```
-
-5. 更改 .env.example 為 .env ， 並放入對應參數
 
 6. 啟動伺服器，執行 app.js 檔案
 
