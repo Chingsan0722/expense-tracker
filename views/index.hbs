@@ -2,9 +2,10 @@
   <div class="col-md-8 m-auto">
     <div class="card card-body mt-5">
       <h2 class="text-center mt-3">{{user.name}}的 記帳本</h2>
+      {{> message}}
       <div class="form-group">
         <select class="form-select" id="exampleSelect1" onChange="location = this.options[this.selectedIndex].value">
-          <option value={{expenseData.category_id.id}}>{{directType}}</option>
+          <option value={{expenseData.category_id.id}}>{{#if directType}}{{directType}}{{/if}}</option>
           <optgroup label="選擇種類"></optgroup>
           <option value=""> 全部</option>
           <option value="收入">收入</option>

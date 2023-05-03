@@ -83,7 +83,11 @@ router.get('/:type', (req, res) => {
             expenseData.forEach((data) => {
               return data.date = data.date.toISOString().slice(0, 10)
             })
-            return res.render('index', { expenseData, totalAmount, directType: expenseData[0].category_id.category })
+            if(expenseData[0] === undefined){
+              req.flash('warning_msg', '該類別沒有帳目！')
+              return res.redirect('/')
+            }
+            return res.render('index', { expenseData, totalAmount, directType: expenseData[0].category_id.category})
           })
           .catch(err => console.log(err))
       )
