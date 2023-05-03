@@ -45,19 +45,21 @@ cd expense-tracker
 npm run seed
 ```
 
-5. 啟動伺服器，執行 app.js 檔案
+5. 更改 .env.example 為 .env ， 並放入對應參數
+
+6. 啟動伺服器，執行 app.js 檔案
 
 ```
-nodemon app.js
+npm run dev
 ```
 
-6. 當 terminal 出現以下字樣，表示伺服器與資料庫已啟動並成功連結
+7. 當 terminal 出現以下字樣，表示伺服器與資料庫已啟動並成功連結
 
 ```
-App i 1s running on http://localhost:3000
+App is running on http://localhost:3000
 ```
 
-7. 使用建立好的種子使用者登入
+8. 使用建立好的種子使用者登入
 
 帳號：user1@example.com
 密碼：1234
