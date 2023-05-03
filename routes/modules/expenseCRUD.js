@@ -48,7 +48,7 @@ router.get('/search', (req, res) => {
             totalAmount += data.amount
           }
         })
-        res.render('index', { expenseData: filterExpense, keywords , totalAmount})
+        res.render('index', { expenseData: filterExpense, keywords, totalAmount })
       })
     )
     .catch(err => console.log(err))
@@ -61,15 +61,15 @@ router.get('/:expenseId/edit', (req, res) => {
   Category.find()
     .then(
       Record.findById(expenseId)
-      .populate('category_id')
-    .lean()
-    .then(expenseData => {
-      expenseData.date = expenseData.date.toISOString().slice(0, 10)
-      res.render('edit', { expenseData })}
-    ))
+        .populate('category_id')
+        .lean()
+        .then(expenseData => {
+          expenseData.date = expenseData.date.toISOString().slice(0, 10)
+          res.render('edit', { expenseData })
+        }
+        ))
     .catch(err => console.log(err))
 })
-
 
 router.put('/:expenseId/edit', (req, res) => {
   const expenseId = req.params.expenseId

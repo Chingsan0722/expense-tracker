@@ -51,10 +51,10 @@ db.once('open', () => {
                   date: '2023-05-02',
                   amount: 100,
                   category_id: id[0],
-                  userId: userId,
+                  userId,
                   categoryId: id[1]
                 })
-                .catch(err => console.log(err))
+                  .catch(err => console.log(err))
               ])
             })
             .catch(err => console.log(err))
@@ -68,4 +68,3 @@ db.once('open', () => {
     })
     .catch(err => console.log(err))
 })
-

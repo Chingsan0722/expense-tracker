@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const expenseSchema = new Schema ({
+const expenseSchema = new Schema({
   amountType: {
     type: String,
-    required:true
+    required: true
   },
   name: {
     type: String,
-    required: true 
+    required: true
   },
   date: {
     type: Date,
@@ -22,12 +22,12 @@ const expenseSchema = new Schema ({
     ref: 'Category',
     required: true
   },
-  userId: { 
+  userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  categoryId:{
+  categoryId: {
     type: String,
     required: true
   }
