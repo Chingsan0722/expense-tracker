@@ -64,7 +64,12 @@ router.post('/register', (req, res) => {
 
 // 登出功能
 router.get('/logout', (req, res) => {
-  req.logOut()
+  req.logOut(error => {
+    if(error){
+      console.log(error)
+      res.redirect('/users/login')
+    }
+  })
   req.flash('success_msg', '您已成功登出！')
   res.redirect('/users/login')
 })

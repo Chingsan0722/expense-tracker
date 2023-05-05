@@ -90,8 +90,8 @@ router.put('/:expenseId/edit', (req, res) => {
 
 // 刪除消費
 router.delete('/:expenseId', (req, res) => {
-  const expenseId = req.params.id
-  return Record.findOne({ expenseId })
+  const expenseId = req.params.expenseId
+  return Record.findOne({ _id: expenseId })
     .then(expense => expense.remove())
     .then(() => res.redirect('/'))
     .catch(err => console.log(err))
