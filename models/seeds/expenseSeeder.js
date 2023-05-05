@@ -15,7 +15,7 @@ const SEED_USER = [
   },
   {
     name: 'user2',
-    email: 'user2@example.con',
+    email: 'user2@example.com',
     password: '1234'
   }
 ]
@@ -46,7 +46,7 @@ db.once('open', () => {
             .then(id => {
               return Promise.all([
                 Record.create({
-                  amountType: 'expense',
+                  amountType: '支出',
                   name: 'exp01',
                   date: '2023-05-02',
                   amount: 100,

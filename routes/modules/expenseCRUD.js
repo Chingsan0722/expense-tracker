@@ -94,6 +94,9 @@ router.delete('/:expenseId', (req, res) => {
   return Record.findOne({ _id: expenseId })
     .then(expense => expense.remove())
     .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      return res.redirect('/')
+    })
 })
 module.exports = router
