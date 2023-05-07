@@ -2,7 +2,6 @@
   <div class="col-md-8 m-auto">
     <div class="card card-body mt-5">
       <h2 class="text-center mt-3">{{user.name}}的 記帳本</h2>
-      {{> message}}
       <div class="form-group">
         <select class="form-select" id="exampleSelect1" onChange="location = this.options[this.selectedIndex].value">
           <option value={{expenseData.category_id.category}}>{{#if type}}{{type}}{{else}}全部{{/if}}</option>
