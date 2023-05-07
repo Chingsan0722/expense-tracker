@@ -38,17 +38,21 @@ router.get('/search', (req, res) => {
       .lean()
       .then(expenseData => {
         const filterExpense = expenseData.filter(data => data.name.trim().toLowerCase().includes(keyword))
-        filterExpense.forEach((data) => {
-          return data.date = data.date.toISOString().slice(0, 10)
-        })
-        expenseData.forEach((data) => {
-          if (data.amountType === 'expense') {
-            totalAmount -= data.amount
-          } else {
-            totalAmount += data.amount
-          }
-        })
-        res.render('index', { expenseData: filterExpense, keywords, totalAmount })
+        if (filterExpense.length === 0) {
+          res.render('index', { keywords, totalAmount })
+        } else {
+          filterExpense.forEach((data) => {
+            return data.date = data.date.toISOString().slice(0, 10)
+          })
+          expenseData.forEach((data) => {
+            if (data.amountType === '支出') {
+              totalAmount -= data.amount
+            } else {
+              totalAmount += data.amount
+            }
+          })
+          res.render('index', { expenseData: filterExpense, keywords, totalAmount })
+        }
       })
     )
     .catch(err => console.log(err))

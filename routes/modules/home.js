@@ -14,7 +14,6 @@ const CATEGORY = {
 router.get('/', (req, res) => {
   const userId = req.user._id
   let totalAmount = 0
-  const directType = '全部'
   Category.find()
     .then(
       Record.find({ userId })
@@ -31,7 +30,7 @@ router.get('/', (req, res) => {
           expenseData.forEach((data) => {
             return data.date = data.date.toISOString().slice(0, 10)
           })
-          return res.render('index', { expenseData, totalAmount, directType })
+          return res.render('index', { expenseData, totalAmount})
         })
         .catch(err => console.log(err))
     )
@@ -42,31 +41,28 @@ router.get('/:type', (req, res) => {
   const userId = req.user._id
   const { type } = req.params
   let totalAmount = 0
-  if (!type) return res.redirect('/')
-    Category.find()
-      .then(
-        Record.find({ categoryId: type, userId })
-          .populate('category_id')
-          .lean()
-          .then((expenseData) => {
-            expenseData.forEach((data) => {
-              if (data.amountType === '支出') {
-                totalAmount -= data.amount
-              } else {
-                totalAmount += data.amount
-              }
-            })
-            expenseData.forEach((data) => {
-              return data.date = data.date.toISOString().slice(0, 10)
-            })
-            if (expenseData[0] === undefined) {
-              req.flash('warning_msg', '該類別沒有帳目！')
-              return res.redirect('/')
+  if (type === '全部') return res.redirect('/')
+  Category.find()
+    .then(
+      Record.find({userId})
+        .populate('category_id')
+        .lean()
+        .then((expenseData) => {
+          const filterExpense = expenseData.filter(data => data.category_id.category.includes(type))
+          filterExpense.forEach((data) => {
+            if (data.amountType === '支出') {
+              totalAmount -= data.amount
+            } else {
+              totalAmount += data.amount
             }
-            return res.render('index', { expenseData, totalAmount, directType: expenseData[0].category_id.category })
           })
-          .catch(err => console.log(err))
-      )
-      .catch(err => console.log(err))
+          filterExpense.forEach((data) => {
+            return data.date = data.date.toISOString().slice(0, 10)
+          })
+          return res.render('index', { expenseData: filterExpense, totalAmount, type })
+        })
+        .catch(err => console.log(err))
+    )
+    .catch(err => console.log(err))
 })
 module.exports = router

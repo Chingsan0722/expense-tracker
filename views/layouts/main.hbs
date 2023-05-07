@@ -26,16 +26,21 @@
                 <span class="visually-hidden">(current)</span>
               </a>
             </li>
+            {{#if isAuthenticated}}
             <form action='/expense/search' method="GET" class="nav-item d-flex mb-0">
-              <input class="form-control me-sm-2" type="search" name="keyword" placeholder="Search" value="{{keywords}}">
+              <input class="form-control me-sm-2" type="search" name="keyword" placeholder="Search"
+                value="{{keywords}}">
               <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
             </form>
+            {{/if}}
           </ul>
-          {{#if isAuthenticated}}
-          <a class="btn btn-success  my-2 my-sm-0" href="/users/logout">Logout</a>
-          {{else}}
-          <a class="btn btn-success  my-2 my-sm-0" href="/users/login">Login</a>
-          {{/if}}
+          <div>
+            {{#if isAuthenticated}}
+            <a class="btn btn-success  my-2 my-sm-0" href="/users/logout">Logout</a>
+            {{else}}
+            <a class="btn btn-success  my-2 my-sm-0" href="/users/login">Login</a>
+            {{/if}}
+          </div>
         </div>
       </div>
     </nav>
