@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
           expenseData.forEach((data) => {
             return data.date = data.date.toISOString().slice(0, 10)
           })
-          return res.render('index', { expenseData, totalAmount})
+          return res.render('index', { expenseData, totalAmount })
         })
         .catch(err => console.log(err))
     )
@@ -44,7 +44,7 @@ router.get('/:type', (req, res) => {
   if (type === '全部') return res.redirect('/')
   Category.find()
     .then(
-      Record.find({userId})
+      Record.find({ userId })
         .populate('category_id')
         .lean()
         .then((expenseData) => {
