@@ -17,7 +17,9 @@
     "passport-facebook": "^3.0.0",
     "passport-local": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
