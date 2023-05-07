@@ -18,7 +18,7 @@
 
 ## Environment SetUp - 環境建置
 
-1. [Node.js](https://nodejs.org/en/)
+1. [Node.js](https://nodejs.org/en/) version: 18.16.0
 
 ## Installing - 專案安裝流程
 
@@ -50,7 +50,7 @@ npm run seed
 6. 啟動伺服器，執行 app.js 檔案
 
 ```
-npm run dev
+npm run start
 ```
 
 7. 當 terminal 出現以下字樣，表示伺服器與資料庫已啟動並成功連結
