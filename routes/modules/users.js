@@ -65,7 +65,7 @@ router.post('/register', (req, res) => {
 // 登出功能
 router.get('/logout', (req, res) => {
   req.logOut(error => {
-    if(error){
+    if (error) {
       console.log(error)
       res.redirect('/users/login')
     }

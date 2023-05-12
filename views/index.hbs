@@ -5,13 +5,14 @@
       <div class="form-group">
         <select class="form-select" id="exampleSelect1" onChange="location = this.options[this.selectedIndex].value">
           <option value={{expenseData.category_id.category}}>{{#if type}}{{type}}{{else}}全部{{/if}}</option>
-          <optgroup label="選擇種類"></optgroup>
           <option value= '全部'>全部</option>
+          <optgroup label="支出"></optgroup>
           <option value= '家居物業'>家居物業</option>
           <option value= '交通出行'>交通出行</option>
           <option value= '休閒娛樂'>休閒娛樂</option>
           <option value= '餐飲食品'>餐飲食品</option>
           <option value= '其他'>其他</option>
+          <optgroup label="收入"></optgroup>
           <option value= '薪資收入'>薪資收入</option>
           <option value= '額外收入'>額外收入</option>
           <option value= '投資收入'>投資收入</option>
@@ -52,31 +53,3 @@
     </div>
   </div>
 </div>
-<!-- all styles of icons (in Font Awesome Classic by default) -->
-
-{{!-- pagination --}}
-{{!-- <div class="d-flex justify-content-center mt-4">
-  <ul class="pagination">
-    <li class="page-item disabled">
-      <a class="page-link" href="#">&laquo;</a>
-    </li>
-    <li class="page-item active">
-      <a class="page-link" href="#">1</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">2</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">3</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">4</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">5</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">&raquo;</a>
-    </li>
-  </ul>
-</div> --}}

@@ -42,7 +42,7 @@ router.get('/search', (req, res) => {
           res.render('index', { keywords, totalAmount })
         } else {
           filterExpense.forEach((data) => {
-            return data.date = data.date.toISOString().slice(0, 10)
+            data.date = data.date.toISOString().slice(0, 10)
           })
           expenseData.forEach((data) => {
             if (data.amountType === '支出') {
