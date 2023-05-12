@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
 const Category = require('../../models/category')
+const record = require('../../models/record')
 
 // 建立新的消費
 router.get('/new', (req, res) => {
@@ -36,22 +37,22 @@ router.get('/search', (req, res) => {
       .find({ userId })
       .populate('category_id')
       .lean()
-      .then(expenseData => {
-        const filterExpense = expenseData.filter(data => data.name.trim().toLowerCase().includes(keyword))
+      .then(records => {
+        const filterExpense = records.filter(data => data.name.trim().toLowerCase().includes(keyword))
         if (filterExpense.length === 0) {
           res.render('index', { keywords, totalAmount })
         } else {
           filterExpense.forEach((data) => {
             data.date = data.date.toISOString().slice(0, 10)
           })
-          expenseData.forEach((data) => {
+          records.forEach((data) => {
             if (data.amountType === '支出') {
               totalAmount -= data.amount
             } else {
               totalAmount += data.amount
             }
           })
-          res.render('index', { expenseData: filterExpense, keywords, totalAmount })
+          res.render('index', { records: filterExpense, keywords, totalAmount })
         }
       })
     )
@@ -67,9 +68,9 @@ router.get('/:expenseId/edit', (req, res) => {
       Record.findById(expenseId)
         .populate('category_id')
         .lean()
-        .then(expenseData => {
-          expenseData.date = expenseData.date.toISOString().slice(0, 10)
-          res.render('edit', { expenseData })
+        .then(records => {
+          records.date = records.date.toISOString().slice(0, 10)
+          res.render('edit', { records })
         }
         ))
     .catch(err => console.log(err))
