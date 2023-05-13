@@ -6,16 +6,18 @@
         <select class="form-select" id="exampleSelect1" onChange="location = this.options[this.selectedIndex].value">
           {{!-- <option value={{records.category_id.category}}>{{#if type}}{{type}}{{else}}全部{{/if}}</option> --}}
           <option {{#unless type}} selected {{/unless}} value="./">全部</option>
-          <optgroup label="支出"></optgroup>
+          <optgroup label="支出">
           <option {{#if (eq type '家居物業')}} selected {{/if}} value='家居物業'>家居物業</option>
           <option {{#if (eq type '交通出行')}} selected {{/if}} value='交通出行'>交通出行</option>
           <option {{#if (eq type '休閒娛樂')}} selected {{/if}} value='休閒娛樂'>休閒娛樂</option>
           <option {{#if (eq type '餐飲食品')}} selected {{/if}} value='餐飲食品'>餐飲食品</option>
           <option {{#if (eq type '其他')}} selected {{/if}} value='其他'>其他</option>
-          <optgroup label="收入"></optgroup>
+          </optgroup>
+          <optgroup label="收入">
           <option {{#if (eq type '薪資收入')}} selected {{/if}} value='薪資收入'>薪資收入</option>
           <option {{#if (eq type '額外收入')}} selected {{/if}} value='額外收入'>額外收入</option>
           <option {{#if (eq type '投資收入')}} selected {{/if}} value='投資收入'>投資收入</option>
+          </optgroup>
         </select>
       </div>
       <h1 class="p-2 text-center">Total Amount： {{totalAmount}} $</h1>

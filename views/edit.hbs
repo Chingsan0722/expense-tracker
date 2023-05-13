@@ -20,16 +20,18 @@
       <label for="categoryId">種類</label>
         <select class="form-select" id="categoryId" name="categoryId" aria-label="Floating label select">
           <option value={{records.category_id.id}}>{{records.category_id.category}}</option>
-          <optgroup label="支出"></optgroup>
+          <optgroup label="支出">
           <option value= 1>家居物業</option>
           <option value= 2>交通出行</option>
           <option value= 3>休閒娛樂</option>
           <option value= 4>餐飲食品</option>
           <option value= 5>其他</option>
-          <optgroup label="收入"></optgroup>
+          </optgroup>
+          <optgroup label="收入">
           <option value= 6>薪資收入</option>
           <option value= 7>額外收入</option>
           <option value= 8>投資收入</option>
+          </optgroup>
         </select>
       <div class="form-group">
         <label class="form-label mt-4" for="amount">金額</label>
