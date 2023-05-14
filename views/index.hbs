@@ -2,23 +2,18 @@
   <div class="col-md-8 m-auto">
     <div class="card card-body mt-5">
       <h2 class="text-center mt-3">{{user.name}}的 記帳本</h2>
-      <div class="form-group">
-        <select class="form-select" id="exampleSelect1" onChange="location = this.options[this.selectedIndex].value">
-          {{!-- <option value={{records.category_id.category}}>{{#if type}}{{type}}{{else}}全部{{/if}}</option> --}}
-          <option {{#unless type}} selected {{/unless}} value="./">全部</option>
-          <optgroup label="支出">
-          <option {{#if (eq type '家居物業')}} selected {{/if}} value='家居物業'>家居物業</option>
-          <option {{#if (eq type '交通出行')}} selected {{/if}} value='交通出行'>交通出行</option>
-          <option {{#if (eq type '休閒娛樂')}} selected {{/if}} value='休閒娛樂'>休閒娛樂</option>
-          <option {{#if (eq type '餐飲食品')}} selected {{/if}} value='餐飲食品'>餐飲食品</option>
-          <option {{#if (eq type '其他')}} selected {{/if}} value='其他'>其他</option>
-          </optgroup>
-          <optgroup label="收入">
-          <option {{#if (eq type '薪資收入')}} selected {{/if}} value='薪資收入'>薪資收入</option>
-          <option {{#if (eq type '額外收入')}} selected {{/if}} value='額外收入'>額外收入</option>
-          <option {{#if (eq type '投資收入')}} selected {{/if}} value='投資收入'>投資收入</option>
-          </optgroup>
-        </select>
+      <div class="row justify-content-center">
+        <form action="/filter" method="POST">
+          <select name="filter" id="filter" class="form-select form-select-bg mb-3 mt-5" onchange="this.form.submit()">
+            {{#if filters}}
+            <option value={{filters.id}} selected="selected">{{filters.category}}</option>
+            {{/if}}
+            <option value="0">全部類別</option>
+            {{#each categories}}
+            <option value="{{this.id}}">{{this.category}}</option>
+            {{/each}}
+          </select>
+        </form>
       </div>
       <h1 class="p-2 text-center">Total Amount： {{totalAmount}} $</h1>
       <table class="table table-hover table-striped">

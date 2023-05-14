@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
     const records = await Record.find({ userId })
       .populate('category_id')
       .lean()
+    const categories = await Category.find().lean()
     records.forEach((data) => {
       if (data.amountType === '支出') {
         totalAmount -= data.amount
@@ -18,22 +19,26 @@ router.get('/', async (req, res) => {
       }
       data.date = data.date.toISOString().slice(0, 10)
     })
-    res.render('index', { records, totalAmount })
+    res.render('index', { records,categories, totalAmount })
   } catch (err) {
     console.log(err)
   }
 })
 
-router.get('/:type', async (req, res) => {
-  const userId = req.user._id
-  const { type } = req.params
-  let totalAmount = 0
+router.post('/filter', async (req, res) => {
   try {
-    const records = await Record.find({ userId })
+    const userId = req.user._id
+    const categoryId = req.body.filter
+    let totalAmount = 0
+    if (categoryId === '0'){ 
+      res.redirect('/')
+    }else{
+    const records = await Record.find({ categoryId, userId })
       .populate('category_id')
       .lean()
-    const filterExpense = records.filter(data => data.category_id.category.includes(type))
-    filterExpense.forEach((data) => {
+    const categories = await Category.find().lean()
+    const filters = await Category.findOne({ id: categoryId }).lean()
+    records.forEach((data) => {
       if (data.amountType === '支出') {
         totalAmount -= data.amount
       } else {
@@ -41,9 +46,37 @@ router.get('/:type', async (req, res) => {
       }
       data.date = data.date.toISOString().slice(0, 10)
     })
-    res.render('index', { records: filterExpense, totalAmount, type })
-  } catch (err) {
+    res.render('index', { records, totalAmount, categories, filters })
+  }} catch (err) {
     console.log(err)
   }
 })
 module.exports = router
+
+// router.post('/', async (req, res) => {
+//   try {
+//     const userId = req.user._id
+//     const categoryId = req.body.filter
+//     if (categoryId === 'all') {
+//       res.redirect('/')
+//     } else {
+//       const details = await Detail.find({ categoryId, userId }).lean()
+//       const categories = await Category.find().lean()
+//       const category = await Category.findOne({ _id: categoryId }).lean()
+//       const mapDetails = details.map((detail) => {
+//         return {
+//           ...detail,
+//           date: detail.date.toLocaleDateString(),
+//           icon: category.icon
+//         }
+//       })
+//       const totalAmount = calculator(mapDetails)
+
+//       res.render('index', { mapDetails, totalAmount, categories, category })
+//     }
+//   } catch (err) {
+//     console.log(err)
+//   }
+// })
+
+// module.exports = router
