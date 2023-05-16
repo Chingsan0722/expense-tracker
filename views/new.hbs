@@ -2,11 +2,11 @@
   <div class="col-8 mt-5">
     <form action="/expense/new" method="POST">
       <label for="amountType" required>收入/支出</label>
-        <select class="form-select" id="amountType" name="amountType" aria-label="Floating label select">
-          <optgroup label="選擇收入或是支出"></optgroup>
-          <option value="收入">收入</option>
-          <option value="支出">支出</option>
-        </select>
+      <select class="form-select" id="amountType" name="amountType" aria-label="Floating label select">
+        <optgroup label="選擇收入或是支出"></optgroup>
+        <option value="收入">收入</option>
+        <option value="支出">支出</option>
+      </select>
       <div class="form-group">
         <fieldset>
           <label class="form-label mt-4" for="name">名稱</label>
@@ -17,20 +17,11 @@
       <input id="date" name="date" class="form-control" type="date" value="" required>
 
       <label for="categoryId" required>種類</label>
-        <select class="form-select" id="categoryId" name="categoryId" aria-label="Floating label select">
-          <optgroup label="支出">
-          <option value= 1>家居物業</option>
-          <option value= 2>交通出行</option>
-          <option value= 3>休閒娛樂</option>
-          <option value= 4>餐飲食品</option>
-          <option value= 5>其他</option>
-          </optgroup>
-          <optgroup label="收入">
-          <option value= 6>薪資收入</option>
-          <option value= 7>額外收入</option>
-          <option value= 8>投資收入</option>
-          </optgroup>
-        </select>
+      <select class="form-select" id="categoryId" name="categoryId" aria-label="Floating label select">
+        {{#each categories}}
+        <option value="{{this.id}}">{{this.category}}</option>
+        {{/each}}
+      </select>
       <div class="form-group">
         <label class="form-label mt-4" for="amount">金額</label>
         <div class="form-group">

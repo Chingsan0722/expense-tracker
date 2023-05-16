@@ -21,7 +21,7 @@ const categories = [
   },
   {
     id: 5,
-    category: '其他',
+    category: '其他支出',
     icon: 'fa-pen'
   },
   {

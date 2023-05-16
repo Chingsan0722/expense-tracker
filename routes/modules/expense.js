@@ -6,20 +6,25 @@ const record = require('../../models/record')
 
 // 建立新的消費
 router.get('/new', (req, res) => {
-  res.render('new')
+  Category.find()
+    .lean()
+    .sort({ id: 'asc' })
+    .then((categories) => {
+      res.render('new', { categories })
+    })
 })
-router.post('/new', (req, res) => {
+router.post('/new', async (req, res) => {
   const { amountType, name, categoryId, amount, date } = req.body
   let category_id = ''
   const userId = req.user._id
-  Category.findOne({ id: categoryId })
-    .then(categories => {
-      category_id = categories._id
-      return Record.create({ amountType, name, category_id, categoryId, amount, date, userId })
-        .catch(err => console.log(err))
-    })
-    .then(res.redirect('/'))
-    .catch(err => console.log(err))
+  try {
+    const categories = await Category.findOne({ id: categoryId })
+    category_id = categories._id
+    await Record.create({ amountType, name, category_id, categoryId, amount, date, userId })
+    res.redirect('/')
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 // 搜尋消費
@@ -32,48 +37,41 @@ router.get('/search', (req, res) => {
   if (!keywords) {
     return res.redirect('/')
   }
-  Category.find()
-    .then(Record
-      .find({ userId })
-      .populate('category_id')
-      .lean()
-      .then(records => {
-        const filterExpense = records.filter(data => data.name.trim().toLowerCase().includes(keyword))
-        if (filterExpense.length === 0) {
-          res.render('index', { keywords, totalAmount })
-        } else {
-          filterExpense.forEach((data) => {
-            data.date = data.date.toISOString().slice(0, 10)
-          })
-          records.forEach((data) => {
-            if (data.amountType === '支出') {
-              totalAmount -= data.amount
-            } else {
-              totalAmount += data.amount
-            }
-          })
-          res.render('index', { records: filterExpense, keywords, totalAmount })
-        }
-      })
-    )
+  Record.find({ userId })
+    .populate('category_id')
+    .lean()
+    .then(records => {
+      const filterExpense = records.filter(data => data.name.trim().toLowerCase().includes(keyword))
+      if (filterExpense.length === 0) {
+        res.render('index', { keywords, totalAmount })
+      } else {
+        filterExpense.forEach((data) => {
+          data.date = data.date.toISOString().slice(0, 10)
+        })
+        records.forEach((data) => {
+          if (data.amountType === '支出') {
+            totalAmount -= data.amount
+          } else {
+            totalAmount += data.amount
+          }
+        })
+        res.render('index', { records: filterExpense, keywords, totalAmount })
+      }
+    })
     .catch(err => console.log(err))
 })
 
 // 修改消費
-router.get('/:expenseId/edit', (req, res) => {
-  // const userId = req.user._id
-  const expenseId = req.params.expenseId
-  Category.find()
-    .then(
-      Record.findById(expenseId)
-        .populate('category_id')
-        .lean()
-        .then(records => {
-          records.date = records.date.toISOString().slice(0, 10)
-          res.render('edit', { records })
-        }
-        ))
-    .catch(err => console.log(err))
+router.get('/:expenseId/edit', async (req, res) => {
+  try {
+    const expenseId = req.params.expenseId
+    const categories = await Category.find().sort({ id: 'asc' }).lean()
+    const records = await Record.findById(expenseId).populate('category_id').lean()
+    records.date = records.date.toISOString().slice(0, 10)
+    res.render('edit', { records, categories})
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 router.put('/:expenseId/edit', (req, res) => {
@@ -105,3 +103,32 @@ router.delete('/:expenseId', (req, res) => {
     })
 })
 module.exports = router
+
+
+// router.post('/', async (req, res) => {
+//   try {
+//     const userId = req.user._id
+//     const categoryId = req.body.filter
+//     if (categoryId === 'all') {
+//       res.redirect('/')
+//     } else {
+//       const details = await Detail.find({ categoryId, userId }).lean()
+//       const categories = await Category.find().lean()
+//       const category = await Category.findOne({ _id: categoryId }).lean()
+//       const mapDetails = details.map((detail) => {
+//         return {
+//           ...detail,
+//           date: detail.date.toLocaleDateString(),
+//           icon: category.icon
+//         }
+//       })
+//       const totalAmount = calculator(mapDetails)
+
+//       res.render('index', { mapDetails, totalAmount, categories, category })
+//     }
+//   } catch (err) {
+//     console.log(err)
+//   }
+// })
+
+// module.exports = router
